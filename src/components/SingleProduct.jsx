@@ -18,6 +18,8 @@ const SingleProduct = ({name,price,quantity,productDeleteHandler}) => {
         <div className="flex items-center gap-8">
         <button className="border-yellow-500 border-2 rounded-lg py-1 px-4 bg-yellow-300 text-black font-bold">Edit</button>
         <button className="border-red-700 border-2 rounded-lg py-1 px-4 bg-red-800 text-white font-bold" onClick={productDeleteHandler}>Delete</button>
+   
+
         </div>
       </div>
     </div>

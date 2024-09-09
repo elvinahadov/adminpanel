@@ -21,6 +21,7 @@ const Navbar = ({sidebarToggle,setSidebarToggle}) => {
             className="w-full px-4 py-1 pl-12 rounded shadow outline-none hidden md:block"
           />
         </div>
+
         <div className="text-white">
           <FaBell className="w-6 h-6" />
         </div>
