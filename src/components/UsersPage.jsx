@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SingleUser from "./SingleUser";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const UsersPage = () => {
   const [userData, setUserData] = useState([]);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -12,10 +13,10 @@ const UsersPage = () => {
           console.log(`Failed to fetch users: ${response.status} ${response.statusText}`);
           return;
         }
-    
+
         const result = await response.json();
         console.log("Fetched users:", result);
-    
+
         const users = Array.isArray(result.data) ? result.data : [];
         setUserData(users);
       } catch (error) {
@@ -34,7 +35,7 @@ const UsersPage = () => {
         console.log(`Failed to delete user.`);
         return;
       }
-      setUserData(prevUsers => prevUsers.filter(user => user._id!== userId));
+      setUserData(prevUsers => prevUsers.filter(user => user._id !== userId));
     } catch (error) {
       console.log("Error deleting user:", error);
     }
@@ -42,6 +43,9 @@ const UsersPage = () => {
 
   return (
     <div className="bg-gray-900 min-h-[100vh] flex flex-col p-4">
+      <Link to="/addUser">
+      <button className="border-green-700 border-2 rounded-lg py-1 px-4 bg-green-800 text-white font-bold">Add User</button>
+      </Link>
       {userData.map((user) => (
         <SingleUser
           key={user._id}

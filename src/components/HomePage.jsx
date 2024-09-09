@@ -1,17 +1,20 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
 
-const HomePage = () => {
+const HomePage = ({children}) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
+
   return (
     <div className="flex">
-      <Sidebar sidebarToggle={sidebarToggle} />
-      <Dashboard
-        sidebarToggle={sidebarToggle}
-        setSidebarToggle={setSidebarToggle}
-      />
+      <Sidebar sidebarToggle={sidebarToggle} setSidebarToggle={setSidebarToggle} />
+      <div className={`flex-1 ${sidebarToggle ? "ml-0" : "ml-64"} transition-all`}>
+        <Dashboard
+          sidebarToggle={sidebarToggle}
+          setSidebarToggle={setSidebarToggle}
+        />
+        {children}
+      </div>
     </div>
   );
 };
