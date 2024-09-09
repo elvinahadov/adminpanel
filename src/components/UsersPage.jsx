@@ -2,7 +2,7 @@ import React from "react";
 import SingleUser from "./SingleUser";
 import { useState, useEffect } from "react";
 
-const UsersPage = ({setSelected,selected}) => {
+const UsersPage = () => {
   const [userData, setUserData] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
@@ -42,7 +42,6 @@ const UsersPage = ({setSelected,selected}) => {
 
   return (
     <div className="bg-gray-900 min-h-[100vh] flex flex-col p-4">
-      <button className="border-green-700 border-2 rounded-lg py-1 px-4 bg-green-800 text-white font-bold" onClick={()=>setSelected("addUser")}>Add User</button>
       {userData.map((user) => (
         <SingleUser
           key={user._id}

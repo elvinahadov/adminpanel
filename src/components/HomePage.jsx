@@ -5,18 +5,12 @@ import Dashboard from "./Dashboard";
 
 const HomePage = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
-  const [selected, setSelected] = useState("");
   return (
     <div className="flex">
-      <Sidebar
-        sidebarToggle={sidebarToggle}
-        selected={selected}
-        setSelected={setSelected}
-      />
+      <Sidebar sidebarToggle={sidebarToggle} />
       <Dashboard
         sidebarToggle={sidebarToggle}
         setSidebarToggle={setSidebarToggle}
-        selected={selected}
       />
     </div>
   );

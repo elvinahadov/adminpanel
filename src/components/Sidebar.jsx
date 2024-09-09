@@ -1,14 +1,9 @@
 import React from "react";
 import { FaHome, FaUser } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const Sidebar = ({
-  sidebarToggle,
-  setSidebarToggle,
-  selected,
-  setSelected,
-}) => {
+const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
   return (
     <div
       className={`${
@@ -21,33 +16,24 @@ const Sidebar = ({
       <hr />
 
       <div className="flex flex-col  items-start text-white mt-2 gap-4">
-        <button
-          className="flex items-center"
-          onClick={() => {
-            setSelected("home");
-          }}
-        >
+        <Link to={"/"}>
+        <button className="flex items-center">
           <FaHome className="inline-block w-6 h-6 " />
           Home
         </button>
-        <button
-          className="flex items-center"
-          onClick={() => {
-            setSelected("users");
-          }}
-        >
+        </Link>
+        <Link to={"/users"}>
+        <button>
           <FaUser className="inline-block w-6 h-6 " />
           Users
         </button>
-        <button
-          className="flex items-center"
-          onClick={() => {
-            setSelected("products");
-          }}
-        >
+        </Link>
+        <Link to={"/products"}>
+        <button>
           <AiFillProduct className="inline-block w-6 h-6 " />
           Products
         </button>
+        </Link>
       </div>
     </div>
   );
