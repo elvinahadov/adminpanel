@@ -2,9 +2,87 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddProductPage = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    category: "",
+    quantity: "",
+    productPic: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "file" ? files[0] : value,
+    }));
+  };
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "hof1ji4h"); // Replace with your actual upload preset
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dj294wevk/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Image upload failed");
+      }
+
+      const data = await response.json();
+      return data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return "";
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let productPicUrl = "";
+    
+    if (formData.productPic) {
+      productPicUrl = await uploadImage(formData.productPic);
+    }
+
+    const productData = {
+      ...formData,
+      productPic: productPicUrl,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8000/api/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create product");
+      }
+
+      const result = await response.json();
+      alert("Product created successfully...", result);
+      navigate("/products");
+    } catch (error) {
+      console.error("Error creating product:", error);
+      alert("Can't create Product...");
+    }
+  };
+
   return (
     <div className="bg-gray-900 min-h-screen m-auto flex items-center justify-center relative">
-      <form className="flex flex-col gap-8">
+      <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
         <h1 className="text-center text-white font-bold text-[48px]">
           Create Product
         </h1>
@@ -15,9 +93,10 @@ const AddProductPage = () => {
           </label>
           <input
             type="text"
-            name="productName"
+            name="name"
             placeholder="Product Name"
             className="bg-gray-800 rounded-lg p-2 text-white"
+            onChange={handleChange}
           />
         </div>
 
@@ -27,9 +106,10 @@ const AddProductPage = () => {
           </label>
           <input
             type="number"
-            name="productPrice"
+            name="price"
             placeholder="Product Price"
-            className="bg-gray-800 rounded-lg p-2 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="bg-gray-800 rounded-lg p-2 text-white [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            onChange={handleChange}
           />
         </div>
 
@@ -39,9 +119,10 @@ const AddProductPage = () => {
           </label>
           <input
             type="text"
-            name="productCategory"
+            name="category"
             placeholder="Product Category"
             className="bg-gray-800 rounded-lg p-2 text-white"
+            onChange={handleChange}
           />
         </div>
 
@@ -51,9 +132,10 @@ const AddProductPage = () => {
           </label>
           <input
             type="number"
-            name="productQuantity"
+            name="quantity"
             placeholder="Product Quantity"
             className="bg-gray-800 rounded-lg p-2 text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            onChange={handleChange}
           />
         </div>
 
@@ -61,7 +143,12 @@ const AddProductPage = () => {
           <label className="text-white font-bold text-[24px]">
             Product Picture
           </label>
-          <input type="file" className="text-white" />
+          <input
+            type="file"
+            name="productPic"
+            className="text-white"
+            onChange={handleChange}
+          />
         </div>
 
         <button
