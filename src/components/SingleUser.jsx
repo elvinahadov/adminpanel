@@ -1,6 +1,6 @@
 import UserIcon from "../assets/user.svg"
 
-const SingleUser = ({fullName,email,userName,userDeleteHandler}) => {
+const SingleUser = ({fullName,email,userName,userDeleteHandler }) => {
   return (
     <div className="bg-gray-800 h-[120px] my-2 w-full">
       <div className="py-4 flex items-center justify-between gap-6 px-6">

@@ -1,11 +1,11 @@
 import React from "react";
 import SingleProduct from "./SingleProduct";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 const ProductsPage = () => {
   const [productData, setProductData] = useState([]);
-  const [addedProduct, setAddedProduct] = useState(false);
- 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -43,14 +43,9 @@ const ProductsPage = () => {
   };
   return (
     <div className="bg-gray-900 min-h-[100vh] flex flex-col p-4">
-        <div><button className="border-pink-700 border-2 rounded-lg py-1 px-4 bg-red-800 text-white font-bold" onClick={()=>setAddedProduct(!addedProduct)}>Add Product</button></div>
-       
-       <div className={`${addedProduct ? "hidden" : "block" } flex flex-col gap-3 w-64 items-center justify-center`}>
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Price" />
-        <input type="text" placeholder="Quantity" />
-        <input type="file"  />
-       </div>
+      <Link to="/addProduct">
+      <button className="border-green-700 border-2 rounded-lg py-1 px-4 bg-green-800 text-white font-bold">Add Product</button>
+      </Link>
       {productData.map((product) => (
         <SingleProduct
           key={product._id}
