@@ -1,5 +1,5 @@
 import React from "react";
-import SingleProduct from "./SingleProduct";
+import SingleProduct from "../components/SingleProduct";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 

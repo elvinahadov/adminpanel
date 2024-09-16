@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
-import Dashboard from "./Dashboard";
+import Sidebar from "../components/Sidebar";
+import Dashboard from "../components/Dashboard";
 
 const HomePage = ({ children }) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
