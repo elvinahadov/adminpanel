@@ -37,12 +37,14 @@ const AddProductPage = () => {
           <label className="text-white font-bold text-[24px]">
             Product Category <sup>*</sup>
           </label>
-          <input
-            type="text"
-            name="productCategory"
-            placeholder="Product Category"
-            className="bg-gray-800 rounded-lg p-2 text-white"
-          />
+          <select>
+            <option value="">Select Category</option>
+            <option value="1">Electronics</option>
+            <option value="2">Clothing</option>
+            <option value="3">Home & Garden</option>
+            <option value="4">Books</option>
+            <option value="5">Sports & Outdoors</option>
+          </select>
         </div>
 
         <div className="flex flex-col items-center gap-2">
