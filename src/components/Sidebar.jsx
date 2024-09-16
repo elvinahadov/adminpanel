@@ -3,6 +3,7 @@ import { FaHome, FaUser } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { MdCategory } from "react-icons/md";
+import { FaQuestion } from "react-icons/fa6";
 
 const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
   return (
@@ -38,6 +39,12 @@ const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
           <button>
             <MdCategory className="inline-block w-6 h-6" />
             Categories
+          </button>
+        </Link>
+        <Link to="/faq">
+          <button>
+            <FaQuestion className="inline-block w-6 h-6" />
+            FAQs
           </button>
         </Link>
       </div>

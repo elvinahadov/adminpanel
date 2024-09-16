@@ -1,40 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddProductPage = () => {
-  const navigate = useNavigate();
-
+  const [categoryData, setCategoryData] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     quantity: "",
     productPic: "",
+    categoryId: "",
     newArrivals: false,
     topSelling: false,
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, type, checked, value, files } = e.target;
-
     setFormData((prevData) => ({
       ...prevData,
-      [name]:
-        type === "checkbox" ? checked : type === "file" ? files[0] : value,
+      [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
     }));
   };
+
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "hof1ji4h");
 
     try {
-      const response = await fetch(
-        "https://api.cloudinary.com/v1_1/dj294wevk/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("https://api.cloudinary.com/v1_1/dj294wevk/image/upload", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error("Image upload failed");
@@ -47,6 +45,7 @@ const AddProductPage = () => {
       return "";
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -75,7 +74,7 @@ const AddProductPage = () => {
       }
 
       const result = await response.json();
-      alert("Product created successfully...", result);
+      alert("Product created successfully", result);
       navigate("/products");
     } catch (error) {
       console.error("Error creating product:", error);
@@ -83,12 +82,29 @@ const AddProductPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/categories");
+        if (!response.ok) {
+          console.log(`Failed to fetch categories.`);
+          return;
+        }
+
+        const result = await response.json();
+        const categories = Array.isArray(result.data) ? result.data : [];
+        setCategoryData(categories);
+      } catch (error) {
+        console.log("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <div className="bg-gray-900 min-h-screen m-auto flex items-center justify-center relative">
       <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-        <h1 className="text-center text-white font-bold text-[48px]">
-          Create Product
-        </h1>
+        <h1 className="text-center text-white font-bold text-[48px]">Create Product</h1>
 
         <div className="flex flex-col items-center gap-2">
           <label className="text-white font-bold text-[24px]">
@@ -120,8 +136,12 @@ const AddProductPage = () => {
           <label className="text-white font-bold text-[24px]">
             Product Category <sup>*</sup>
           </label>
-          <select name="catogry" id="category">
-            
+          <select name="categoryId" id="category" onChange={handleChange}>
+            {categoryData && categoryData.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -162,6 +182,7 @@ const AddProductPage = () => {
             onChange={handleChange}
           />
         </div>
+
         <div className="flex items-center gap-2 justify-center">
           <label className="text-white font-bold text-[24px]">
             Top Selling
