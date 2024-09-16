@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AddUserPage = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const AddUserPage = () => {
     fullName: "",
     email: "",
     password: "",
-    profilePicture: null,
+    profilePic: "",
   });
 
   const handleChange = (e) => {
@@ -21,15 +21,46 @@ const AddUserPage = () => {
     }));
   };
 
+  const uploadImage = async (file) => {
+    const uploadData = new FormData();
+    uploadData.append("file", file);
+    uploadData.append("upload_preset", "hof1ji4h");
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dj294wevk/image/upload",
+        {
+          method: "POST",
+          body: uploadData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Image upload failed");
+      }
+
+      const data = await response.json();
+      return data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return ""; 
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create FormData object to send multipart/form-data
-    const data = new FormData();
-    for (const key in formData) {
-      data.append(key, formData[key]);
+    let profilePicUrl = "";
+
+    if (formData.profilePic) {
+      profilePicUrl = await uploadImage(formData.profilePic);
     }
+
+    // Prepare the data to be sent to the server
+    const userData = {
+      ...formData,
+      profilePic: profilePicUrl, // Update with the uploaded image URL
+    };
 
     try {
       const response = await fetch("http://localhost:8000/users", {
@@ -37,24 +68,28 @@ const AddUserPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(userData),
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to create user");
+      }
+
       const result = await response.json();
-      alert(`User successfully created...`);
-    } catch (error) {
-      alert("Can't create user...",error);
-
-    }
-
+      alert("User created successfully...",result);
       navigate("/users");
-    
+    } catch (error) {
+      console.error("Error creating user:", error);
+      alert("Can't create user...");
+    }
   };
 
   return (
     <div className="bg-gray-900 min-h-screen m-auto flex items-center justify-center relative">
       <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-        <h1 className="text-center text-white font-bold text-[48px]">Create User</h1>
+        <h1 className="text-center text-white font-bold text-[48px]">
+          Create User
+        </h1>
 
         <div className="flex flex-col items-center gap-2">
           <label className="text-white font-bold text-[24px]">
@@ -64,7 +99,6 @@ const AddUserPage = () => {
             type="text"
             name="userName"
             placeholder="User Name"
-            value={formData.userName}
             onChange={handleChange}
             className="bg-gray-800 rounded-lg p-2 text-white"
           />
@@ -78,7 +112,6 @@ const AddUserPage = () => {
             type="text"
             name="fullName"
             placeholder="Full Name"
-            value={formData.fullName}
             onChange={handleChange}
             className="bg-gray-800 rounded-lg p-2 text-white"
           />
@@ -92,7 +125,6 @@ const AddUserPage = () => {
             type="email"
             name="email"
             placeholder="Email address"
-            value={formData.email}
             onChange={handleChange}
             className="bg-gray-800 rounded-lg p-2 text-white"
           />
@@ -106,7 +138,6 @@ const AddUserPage = () => {
             type="password"
             name="password"
             placeholder="Password"
-            value={formData.password}
             onChange={handleChange}
             className="bg-gray-800 rounded-lg p-2 text-white"
           />
@@ -118,7 +149,7 @@ const AddUserPage = () => {
           </label>
           <input
             type="file"
-            name="profilePicture"
+            name="profilePic"
             onChange={handleChange}
             className="text-white"
           />

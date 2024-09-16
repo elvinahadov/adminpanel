@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SingleUser from "./SingleUser";
+import SingleUser from "../components/SingleUser";
 import { Link } from "react-router-dom";
 
 const UsersPage = () => {
@@ -10,7 +10,9 @@ const UsersPage = () => {
       try {
         const response = await fetch("http://localhost:8000/users");
         if (!response.ok) {
-          console.log(`Failed to fetch users: ${response.status} ${response.statusText}`);
+          console.log(
+            `Failed to fetch users: ${response.status} ${response.statusText}`
+          );
           return;
         }
 
@@ -35,7 +37,9 @@ const UsersPage = () => {
         console.log(`Failed to delete user.`);
         return;
       }
-      setUserData(prevUsers => prevUsers.filter(user => user._id !== userId));
+      setUserData((prevUsers) =>
+        prevUsers.filter((user) => user._id !== userId)
+      );
     } catch (error) {
       console.log("Error deleting user:", error);
     }
@@ -44,7 +48,9 @@ const UsersPage = () => {
   return (
     <div className="bg-gray-900 min-h-[100vh] flex flex-col p-4">
       <Link to="/addUser">
-      <button className="border-green-700 border-2 rounded-lg py-1 px-4 bg-green-800 text-white font-bold">Add User</button>
+        <button className="border-green-700 border-2 rounded-lg py-1 px-4 bg-green-800 text-white font-bold">
+          Add User
+        </button>
       </Link>
       {userData.map((user) => (
         <SingleUser
@@ -52,6 +58,7 @@ const UsersPage = () => {
           fullName={user.fullName}
           userName={user.userName}
           email={user.email}
+          profilePic={user.profilePic}
           userDeleteHandler={() => userDeleteHandler(user._id)}
         />
       ))}
