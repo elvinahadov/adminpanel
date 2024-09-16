@@ -7,22 +7,25 @@ const AddProductPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    category: "",
     quantity: "",
     productPic: "",
+    newArrivals: false,
+    topSelling: false,
   });
 
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
+    const { name, type, checked, value, files } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === "file" ? files[0] : value,
+      [name]:
+        type === "checkbox" ? checked : type === "file" ? files[0] : value,
     }));
   };
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "hof1ji4h"); // Replace with your actual upload preset
+    formData.append("upload_preset", "hof1ji4h");
 
     try {
       const response = await fetch(
@@ -48,7 +51,7 @@ const AddProductPage = () => {
     e.preventDefault();
 
     let productPicUrl = "";
-    
+
     if (formData.productPic) {
       productPicUrl = await uploadImage(formData.productPic);
     }
@@ -117,13 +120,9 @@ const AddProductPage = () => {
           <label className="text-white font-bold text-[24px]">
             Product Category <sup>*</sup>
           </label>
-          <input
-            type="text"
-            name="category"
-            placeholder="Product Category"
-            className="bg-gray-800 rounded-lg p-2 text-white"
-            onChange={handleChange}
-          />
+          <select name="catogry" id="category">
+            
+          </select>
         </div>
 
         <div className="flex flex-col items-center gap-2">
@@ -147,6 +146,31 @@ const AddProductPage = () => {
             type="file"
             name="productPic"
             className="text-white"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="flex items-center gap-2 justify-center">
+          <label className="text-white font-bold text-[24px]">
+            New Arrivals
+          </label>
+          <input
+            type="checkbox"
+            name="newArrivals"
+            className="bg-gray-800 rounded-lg p-2 text-white"
+            checked={formData.newArrivals}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex items-center gap-2 justify-center">
+          <label className="text-white font-bold text-[24px]">
+            Top Selling
+          </label>
+          <input
+            type="checkbox"
+            name="topSelling"
+            className="bg-gray-800 rounded-lg p-2 text-white"
+            checked={formData.topSelling}
             onChange={handleChange}
           />
         </div>

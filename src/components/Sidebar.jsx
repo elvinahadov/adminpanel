@@ -2,6 +2,7 @@ import React from "react";
 import { FaHome, FaUser } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { MdCategory } from "react-icons/md";
 
 const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
   return (
@@ -31,6 +32,12 @@ const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
           <button>
             <AiFillProduct className="inline-block w-6 h-6" />
             Products
+          </button>
+        </Link>
+        <Link to="/categories">
+          <button>
+            <MdCategory className="inline-block w-6 h-6" />
+            Categories
           </button>
         </Link>
       </div>
