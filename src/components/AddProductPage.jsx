@@ -63,6 +63,20 @@ const AddProductPage = () => {
           </label>
           <input type="file" className="text-white" />
         </div>
+        <div className="flex flex-col items-center">
+          <div>
+          <label className="text-white font-bold text-[23px] mr-5">
+            New Arrivals
+          </label>
+          <input type="checkbox" name="newArrivals"/>
+          </div>
+          <div>
+          <label className="text-white font-bold text-[23px] mr-5">
+            Top Selling
+          </label>
+          <input type="checkbox" name="topSelling"/>
+          </div>
+        </div>
 
         <button
           type="submit"
