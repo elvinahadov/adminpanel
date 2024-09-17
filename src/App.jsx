@@ -9,6 +9,8 @@ import CategoryPage from "./pages/CategoryPage";
 import AddCategoryPage from "./pages/AddCategoryPage";
 import FAQpage from "./pages/FAQpage";
 import AddFAQpage from "./pages/AddFAQpage";
+import CommonPage from "./pages/CommonPage";
+import AddCommonPage from "./pages/AddCommonPage";
 
 function App() {
   return (
@@ -24,7 +26,9 @@ function App() {
             <Route path="/addProduct" element={<AddProductPage />} />
             <Route path="/faq" element={<FAQpage />} />
             <Route path="/addFaq" element={<AddFAQpage />} />
-          </Route>
+            <Route path="/common" element={<CommonPage />} />
+            <Route path="/addCommon" element={<AddCommonPage />} />
+            </Route>
         </Routes>
       </HomePage>
     </Router>

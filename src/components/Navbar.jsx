@@ -2,11 +2,14 @@ import React from "react";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { FaBars, FaBell } from "react-icons/fa6";
 
-const Navbar = ({sidebarToggle,setSidebarToggle}) => {
+const Navbar = ({ sidebarToggle, setSidebarToggle }) => {
   return (
     <nav className="flex bg-gray-800 px-4 py-3 justify-between">
       <div className="flex items-center text-xl">
-        <FaBars className="text-white me-4 cursor-pointer" onClick={()=>setSidebarToggle(!sidebarToggle)}/>
+        <FaBars
+          className="text-white me-4 cursor-pointer"
+          onClick={() => setSidebarToggle(!sidebarToggle)}
+        />
         <span className="text-white font-semibold">E-commerce</span>
       </div>
       <div className="flex items-center gap-x-5">

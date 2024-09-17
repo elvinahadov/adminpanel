@@ -4,6 +4,7 @@ import { AiFillProduct } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { MdCategory } from "react-icons/md";
 import { FaQuestion } from "react-icons/fa6";
+import { FaCreativeCommons } from "react-icons/fa";
 
 const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
   return (
@@ -18,33 +19,39 @@ const Sidebar = ({ sidebarToggle, setSidebarToggle }) => {
       <hr />
       <div className="flex flex-col items-start text-white mt-2 gap-4 p-4">
         <Link to="/">
-          <button className="flex items-center">
+          <button className="flex items-center gap-2">
             <FaHome className="inline-block w-6 h-6" />
             Home
           </button>
         </Link>
         <Link to="/users">
-          <button>
+          <button className="flex items-center gap-2">
             <FaUser className="inline-block w-6 h-6" />
             Users
           </button>
         </Link>
         <Link to="/products">
-          <button>
+          <button className="flex items-center gap-2">
             <AiFillProduct className="inline-block w-6 h-6" />
             Products
           </button>
         </Link>
         <Link to="/categories">
-          <button>
+          <button className="flex items-center gap-2">
             <MdCategory className="inline-block w-6 h-6" />
             Categories
           </button>
         </Link>
         <Link to="/faq">
-          <button>
+          <button className="flex items-center gap-2">
             <FaQuestion className="inline-block w-6 h-6" />
             FAQs
+          </button>
+        </Link>
+        <Link to="/common">
+          <button className="flex items-center gap-2">
+            <FaCreativeCommons className="inline-block w-6 h-6" />
+            Common Pages
           </button>
         </Link>
       </div>

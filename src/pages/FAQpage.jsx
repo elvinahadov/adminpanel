@@ -40,7 +40,7 @@ const FAQpage = () => {
         prevFaqs.filter((faq) => faq._id !== faqId)
       );
     } catch (error) {
-      console.log("Error deleting category:", error);
+      console.log("Error deleting Common:", error);
     }
   };
   return (

@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 
 const SingleFAQ = ({title,description,faqDeleteHandler}) => {
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(0);
 
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   return (
@@ -20,7 +20,8 @@ const SingleFAQ = ({title,description,faqDeleteHandler}) => {
           {title}
         </AccordionHeader>
         <AccordionBody className="text-white">
-          {description}
+
+          {open === 0 ? "": description}
         </AccordionBody>
       </Accordion>
       <div className="flex gap-4 absolute top-[10px] right-[10px]">
